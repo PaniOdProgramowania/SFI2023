@@ -8,7 +8,6 @@ public class DemoDbApplication {
 
 	public static void main(String[] args) {
 		System.setProperty("spring.profiles.default", "local");
-		// SEEK FIND INPUT =
 		SpringApplication.run(DemoDbApplication.class, args);
 	}
 }
