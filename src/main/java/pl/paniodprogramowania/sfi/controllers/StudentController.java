@@ -1,5 +1,7 @@
 package pl.paniodprogramowania.sfi.controllers;
 
+import static org.springframework.http.HttpStatus.NOT_FOUND;
+
 import jakarta.servlet.http.HttpServletRequest;
 import java.util.List;
 import lombok.AllArgsConstructor;
@@ -23,21 +25,23 @@ public class StudentController {
   private StudentService studentService;
 
   @GetMapping("/students")
-  public List<Student> getStudents(){
+  public List<Student> getStudents() {
     log.info("fetching all students");
     return studentService.getStudents();
   }
 
   @GetMapping("/students/{studentId}")
-  public Student getStudentBy(@PathVariable String studentId){
+  public Student getStudentBy(@PathVariable String studentId) {
     log.info("fetching student with id " + studentId);
     return studentService.getStudent(Long.valueOf(studentId));
   }
 
   @ExceptionHandler(IllegalArgumentException.class)
-  public ResponseEntity<String> handleBadIdInRequest(IllegalArgumentException exception,
-                                                     HttpServletRequest httpServletRequest) {
+  public ResponseEntity<String> handleBadIdInRequest(
+      IllegalArgumentException exception,
+      HttpServletRequest httpServletRequest
+  ) {
     log.warn("bad student id was provided");
-    return new ResponseEntity<>("Provided id is not valid", HttpStatus.NOT_FOUND);
+    return new ResponseEntity<>("Provided id is not valid", NOT_FOUND);
   }
 }
